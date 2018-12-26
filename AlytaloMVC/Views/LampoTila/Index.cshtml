@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+    table {
+        margin-top: 0px;
+        background-color: rgb(61,63,63);
+        text-align: center;
+        box-shadow: 2px 2px 8px #000000;
+        color: white;
+        padding: 40px;
+        font-style: inherit;
+        border-radius: 20px;
+        border-color: white;
+        border-style: solid;
+        border-width: 30px;
+    }
+
+</style>
+
+@section scripts {
+
+
+    <script type="text/javascript">
+
+
+        function päivitäListaus() {
+            $.getJSON("/lampotila/getlist", null, function (json) {
+                var HuoneLampotila = JSON.parse(json);
+
+                var html = "";
+                for (var index = 0; index < HuoneLampotila.length; index++) {
+                    html += "<tr>" +
+                        "<td>" + HuoneLampotila[index].Lampotila + "</td>" +
+                        "<td>" + HuoneLampotila[index].HuoneenNimi + "</td>" +
+                        "<td><a href='#'><span class='glyphicon glyphicon-record'></span></a></td>" +
+                        "</tr>\r\n";
+                }
+                $("#LampoList tbody").html(html);
+
+                //tästä lisätty
+            });
+        }
+        $(function () {
+            päivitäListaus();
+
+            $("#SaveButton").click(function () {
+                // luetaan käyttäjän syöttämät kentät
+                var details = {
+                    Lampotila: $("#lampo_tila").val(),
+                };
+
+                $.post("/lampotila/lampo/", details, function (status) {
+                    if (status == true) {        
+                        päivitäListaus();
+                    }
+                    else {
+                        alert("Tarkista syöttämäsi lämpötila. Lämpötilan voi asettaa 18-24 asteen välille!");
+                    }
+                });
+            });
+
+            console.log("Alustus valmis!");
+
+        });
+
+    </script>
+}
+
+    <div class="w3-container text-center">
+        <h1> Aseta lämpötila huoneeseen</h1>
+        <p><span style="background-color:dimgrey; color:white;"> Lämpötilan voi asettaa 18 - 24 asteen välille</span></p>
+
+        <div class="third">
+            <div class="container">
+                <form class="">
+                    <div class="form-group">
+                        <label class="p" for="Lämpötila" style="margin-top:30px;">Lämpötila</label>
+                        <input type="text" class="form-control" id="lampo_tila" placeholder="Aseta uusi lämpotila">
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-default btn-circle btn-lg" id="SaveButton">Aseta uusi lämpötila</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="third">
+            <table class="table" id="LampoList">
+                <thead>
+                    <tr>
+                        <th>Lämpötila</th>
+                        <th>Nimi</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+

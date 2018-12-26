@@ -1,0 +1,227 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+    h1 {
+        font-family: Lucida Console;
+        font-size: 40px;
+        color: red;
+        text-shadow: 2px 2px 4px #000000;
+    }
+
+    .glyphicon-off {
+        font-size: 40PX;
+        color: rgb(91,89,114);
+        text-shadow: 2px 2px 4px #000000;
+        margin: 10px;
+    }
+
+    .glyphicon-record {
+        font-size: 32px;
+        color: rgb(184,179,214);
+        text-shadow: 2px 2px 4px #000000;
+        text-align: match-parent;
+        margin-top: 15px;
+    }
+
+    .glyphicon-plus-sign {
+        font-size: 32px;
+        color: rgb(184,179,214);
+        text-shadow: 2px 2px 4px #000000;
+        text-align: match-parent;
+        margin-top: 15px;
+    }
+
+    .glyphicon-minus-sign {
+        font-size: 32px;
+        color: rgb(184,179,214);
+        text-shadow: 2px 2px 4px #000000;
+        text-align: match-parent;
+        margin-top: 15px;
+    }
+
+    table {
+        margin-left: 50px;
+        margin-top: 0px;
+        background-color: rgb(61,63,63);
+        text-align: center;
+        box-shadow: 2px 2px 8px #000000;
+        color: white;
+        padding: 40px;
+        font-style: inherit;
+        border-radius: 20px;
+        border-color: white;
+        border-style: solid;
+        border-width: 30px;
+        width: 90%;
+    }
+
+    th, td {
+        margin-top:15px;
+        text-align: center;
+        padding: 40px;
+        padding-top: 20px;
+        width: 10%;       
+
+    }
+
+
+    .tbVaihtuu {
+        font-size: 30px;
+        color: ghostwhite;
+    }
+
+    .tausta {
+        background-image: url("../../Images/space-3197611_1280.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-color: rgba(255,255,230,0.6);
+    }
+</style>
+
+
+<script type="text/javascript">
+
+
+    function päivitäListaus() {
+        $.getJSON("/sauna/getlist", null, function (json) {
+            var Sauna = JSON.parse(json);
+
+            var html = "";
+            for (var index = 0; index < Sauna.length; index++) {
+                html += "<tr>" +
+                    "<td>" + Sauna[index].SaunaID + "</td>" +
+                    "<td>" + Sauna[index].Sauna_Nimi + "</td>" +
+                    "<td><a href='#'><span class='glyphicon glyphicon-off'></span></a></td>" +
+                    "<td><a href='#'><span class='glyphicon glyphicon-record'></span></a></td>" +
+                    "<td><a href='#'><span class='glyphicon glyphicon-minus-sign'></span></a></td>" +
+                    "<td><a href='#'><span class='glyphicon glyphicon-plus-sign'></span></a></td>" +
+                    "<td class='td'>" + Sauna[index].LampoNyt + "</td>" +
+                    "<td class='td'>" + Sauna[index].Tila + "</td>" +
+                    "</tr>\r\n";
+            }
+
+            $("#SaunaList tbody").html(html);
+
+            //tästä lisätty sauna POIS
+            $(".glyphicon-off").click(function () {
+                // etsitään asiakkaan tiedot klikatulta riviltä
+
+                var SaunaID = $(this).parent().parent().prev().prev().text();
+                $.getJSON("/sauna/Saunaoff/" + SaunaID, null, function (status) {
+                    if (status == true) {
+                        päivitäListaus();
+                    }
+                    else {
+                        alert("Poistaminen ei onnistunut, yritä uudelleen!");
+                    }
+                });
+            });
+
+            //Sauna päälle
+            $(".glyphicon-record").click(function () {
+                // etsitään asiakkaan tiedot klikatulta riviltä
+
+                var SaunaID = $(this).parent().parent().prev().prev().prev().text();
+                $.getJSON("/sauna/Saunaon/" + SaunaID, null, function (status) {
+                    if (status == true) {
+                        päivitäListaus();
+                    }
+                    else {
+                        alert("Lämpötilaa ei voi asettaa alle 20 astetta");
+                    }
+                });
+            });
+
+            //Saunan lämpötilan laskeminen -5 astetta
+            $(".glyphicon-minus-sign").click(function () {
+                // etsitään asiakkaan tiedot klikatulta riviltä
+
+                var SaunaID = $(this).parent().parent().prev().prev().prev().prev().text();
+                $.getJSON("/sauna/SaunaMiinus/" + SaunaID, null, function (status) {
+                    if (status == true) {
+                        päivitäListaus();
+                    }
+                    else {
+                        alert("Lämpötilaa ei voi asettaa yli 90 astetta");
+                    }
+                });
+            });
+
+            //Sauna lämpötilan nostaminen +5 astetta
+            $(".glyphicon-plus-sign").click(function () {
+                // etsitään asiakkaan tiedot klikatulta riviltä
+
+                var ValoID = $(this).parent().parent().prev().prev().prev().prev().prev().text();
+                $.getJSON("/sauna/SaunaPlus/" + ValoID, null, function (status) {
+                    if (status == true) {
+                        päivitäListaus();
+
+                    }
+                });
+            });
+        });
+    }
+
+    $(function () {
+        päivitäListaus();
+
+    });
+
+    //var c = 0;
+    //var t;
+    //var timer_is_on = 0;
+
+    //function timedCount() {
+    //    document.getElementById("txt").value = c;
+    //    c = c + 1;
+    //    t = setTimeout(timedCount, 1000);
+    //}
+
+    //function startCount() {
+    //    if (!timer_is_on) {
+    //        timer_is_on = 1;
+    //        timedCount();
+    //    }
+    //}
+
+    //function stopCount() {
+    //    clearTimeout(t);
+    //    timer_is_on = 0;
+    //}
+
+</script>
+
+
+<header class="w3-container w3-center w3-padding-32">
+    <h1 class="text-center">Valotaulu</h1>
+</header>
+
+
+<table class="table" id="SaunaList">
+    <thead>
+        <tr>
+            <th>Sauna Numero</th>
+            <th>Sauna Nimi</th>
+            <th>Sauna OFF</th>
+            <th>Sauna ON</th>
+            <th>Aseta läpötila</th>
+            <th>Tavoite lämpötila</th>
+            <th>Tila</th>
+        </tr>
+    </thead>
+    <tbody style="padding:40px;"></tbody>
+</table>
+
+

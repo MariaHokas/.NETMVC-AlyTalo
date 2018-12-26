@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+    h1 {
+        font-family: "Arial Black", Gadget, sans-serif;
+        font-size: 60px;
+    }
+
+    .glyphicon-off {
+        font-size: 40PX;
+        color: rgb(91,89,114);
+        text-shadow: 2px 2px 4px #000000;
+        margin: 10px;
+    }
+
+    .glyphicon-record {
+        font-size: 32px;
+        color: rgb(184,179,214);
+        text-shadow: 2px 2px 4px #000000;
+        text-align: match-parent;
+        margin-top: 15px;
+    }
+
+    table {
+        margin-top: 0px;
+        background-color: rgb(61,63,63);
+        text-align: center;
+        box-shadow: 2px 2px 8px #000000;
+        color: white;
+        padding: 40px;
+        font-style: inherit;
+        border-radius: 20px;
+        border-color: white;
+        border-style: solid;
+        border-width: 30px;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 40px;
+        padding-top: 20px;
+        width: 10%;
+    }
+
+
+    .tbVaihtuu {
+        font-size: 30px;
+        color: ghostwhite;
+    }
+    .tausta {
+        background-image: url("../../Images/space-3197611_1280.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-color: rgba(255,255,230,0.6);
+    }
+
+
+</style>
+
+@section scripts {
+
+
+    <script type="text/javascript">
+
+
+        function päivitäListaus() {
+            $.getJSON("/valot/getlist", null, function (json) {
+                var Valot = JSON.parse(json);
+
+                var html = "";
+                for (var index = 0; index < Valot.length; index++) {
+                    html += "<tr>" +
+                        "<td>" + Valot[index].ValoID + "</td>" +
+                        "<td>" + Valot[index].Huone + "</td>" +
+                        "<td><a href='#'><span class='glyphicon glyphicon-off'></span></a></td>" +
+                        "<td><a href='#'><span class='glyphicon glyphicon-record'></span></a></td>" +
+                        "<td><a href='#'><span class='glyphicon glyphicon-record'></span></a></td>" +
+                        "<td><a href='#'><span class='glyphicon glyphicon-record'></span></a></td>" +
+                        "<td class='td'>" + Valot[index].Tila + "</td>" +
+                        "</tr>\r\n";
+                }
+
+                $("#ValotList tbody").html(html);
+
+                //tästä lisätty Valot POIS
+                $(".glyphicon-off").click(function () {
+                    // etsitään asiakkaan tiedot klikatulta riviltä
+
+                    var ValoID = $(this).parent().parent().prev().prev().text();
+                    $.getJSON("/valot/valotoff/" + ValoID, null, function (status) {
+                        if (status == true) {
+                            päivitäListaus();
+                        }
+                        else {
+                            alert("Poistaminen ei onnistunut, yritä uudelleen!");
+                        }
+                    });
+                });
+                //tästä lisätty Valot 33
+                $(".glyphicon-record").click(function () {
+                    // etsitään asiakkaan tiedot klikatulta riviltä
+
+                    var ValoID = $(this).parent().parent().prev().prev().prev().text();
+                    $.getJSON("/valot/Valot33/" + ValoID, null, function (status) {
+                        if (status == true) {
+                            päivitäListaus();
+                        }
+
+                    });
+                });
+
+                $(".glyphicon-record").click(function () {
+                    // etsitään asiakkaan tiedot klikatulta riviltä
+
+                    var ValoID = $(this).parent().parent().prev().prev().prev().prev().text();
+                    $.getJSON("/valot/Valot66/" + ValoID, null, function (status) {
+                        if (status == true) {
+                            päivitäListaus();
+                        }
+
+                    });
+                });
+
+                $(".glyphicon-record").click(function () {
+                    // etsitään asiakkaan tiedot klikatulta riviltä
+
+                    var ValoID = $(this).parent().parent().prev().prev().prev().prev().prev().text();
+                    $.getJSON("/valot/Valot100/" + ValoID, null, function (status) {
+                        if (status == true) {
+                            päivitäListaus();
+
+                        }
+
+                    });
+                });
+            });
+        }
+
+        $(function () {
+            päivitäListaus();
+
+        });
+
+    </script>
+}
+
+<header class="w3-container w3-center w3-padding-32">
+    <h1 class="w3-text-black text-center">Valotaulu</h1>
+</header>
+
+
+<table class="table" id="ValotList">
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Huone</th>
+            <th>Valot Pois</th>
+            <th>Valon tila 33</th>
+            <th>Valon tila 66</th>
+            <th>Valon tila 100</th>
+            <th>Tila</th>
+        </tr>
+    </thead>
+    <tbody style="padding:40px;"></tbody>
+</table>
+
+
+
