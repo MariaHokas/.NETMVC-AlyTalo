@@ -158,7 +158,7 @@
     <Compile Include="Models\HuoneLampotila.cs">
       <DependentUpon>AlyTaloModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LampoTilaController.cs" />
+    <Compile Include="Controllers\LampoTilaController.cs" />
     <Compile Include="Models\Sauna.cs">
       <DependentUpon>AlyTaloModel.tt</DependentUpon>
     </Compile>
