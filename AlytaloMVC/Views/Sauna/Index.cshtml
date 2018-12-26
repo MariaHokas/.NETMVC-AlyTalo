@@ -26,8 +26,8 @@
         margin: 10px;
     }
 
-    .glyphicon-record {
-        font-size: 32px;
+    .fa-circle {
+        font-size: 40px;
         color: rgb(184,179,214);
         text-shadow: 2px 2px 4px #000000;
         text-align: match-parent;
@@ -88,6 +88,8 @@
         background-position: center;
         background-color: rgba(255,255,230,0.6);
     }
+
+
 </style>
 
 
@@ -104,7 +106,7 @@
                     "<td>" + Sauna[index].SaunaID + "</td>" +
                     "<td>" + Sauna[index].Sauna_Nimi + "</td>" +
                     "<td><a href='#'><span class='glyphicon glyphicon-off'></span></a></td>" +
-                    "<td><a href='#'><span class='glyphicon glyphicon-record'></span></a></td>" +
+                    "<td><a href='#'><span class='fa fa-circle'></span></a></td>" +
                     "<td><a href='#'><span class='glyphicon glyphicon-minus-sign'></span></a></td>" +
                     "<td><a href='#'><span class='glyphicon glyphicon-plus-sign'></span></a></td>" +
                     "<td class='td'>" + Sauna[index].LampoNyt + "</td>" +
@@ -130,7 +132,7 @@
             });
 
             //Sauna päälle
-            $(".glyphicon-record").click(function () {
+            $(".fa fa-circle").click(function () {
                 // etsitään asiakkaan tiedot klikatulta riviltä
 
                 var SaunaID = $(this).parent().parent().prev().prev().prev().text();
@@ -205,7 +207,7 @@
 
 
 <header class="w3-container w3-center w3-padding-32">
-    <h1 class="text-center">Valotaulu</h1>
+    <h1 class="text-center">Sauna</h1>
 </header>
 
 
@@ -221,7 +223,7 @@
             <th>Tila</th>
         </tr>
     </thead>
-    <tbody style="padding:40px;"></tbody>
+    <tbody></tbody>
 </table>
 
 

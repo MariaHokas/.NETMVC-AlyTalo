@@ -1,0 +1,58 @@
+﻿body {
+    h1
+
+{
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: 60px;
+}
+
+.glyphicon-off {
+    font-size: 40PX;
+    color: rgb(91,89,114);
+    text-shadow: 2px 2px 4px #000000;
+    margin: 10px;
+}
+
+.fa-circle {
+    font-size: 40px;
+    color: rgb(184,179,214);
+    text-shadow: 3px 3px 4px #000000;
+    text-align: match-parent;
+    margin-top: 15px;
+}
+
+table {
+    margin-top: 0px;
+    background-color: rgb(61,63,63);
+    text-align: center;
+    box-shadow: 2px 2px 8px #000000;
+    color: white;
+    padding: 40px;
+    font-style: inherit;
+    border-radius: 20px;
+    border-color: white;
+    border-style: solid;
+    border-width: 30px;
+}
+
+th, td {
+    text-align: center;
+    padding: 40px;
+    padding-top: 20px;
+    width: 10%;
+}
+
+
+.tbVaihtuu {
+    font-size: 30px;
+    color: ghostwhite;
+}
+
+.tausta {
+    background-image: url("../../Images/space-3197611_1280.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255,255,230,0.6);
+}
+}

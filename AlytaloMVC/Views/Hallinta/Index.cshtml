@@ -1,0 +1,290 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+    table {
+        table-layout: auto;
+        width: 180px;
+        background-color: rgb(61,63,63);
+        text-align: center;
+        box-shadow: 2px 2px 8px #000000;
+        color: white;
+        padding: 40px;
+        font-style: inherit;
+        border-radius: 20px;
+        border-color: white;
+        border-style: solid;
+        border-width: 30px;
+        width: 90%;
+    }
+        .kokotable {
+            table-layout: auto;
+            width: 180px;
+        }
+
+    th, td {
+        text-align: center;
+        padding: 40px;
+        padding-top: 20px;
+        width: 10%;
+    }
+
+    .p
+    {
+
+        font-size: 20px;
+        color: red;
+    }
+    caption {
+        display: table-caption;
+        text-align: center;
+        color: red;
+        font-size: 20px;
+    }
+
+    input
+    {
+        max-width: 200px;
+
+    }
+
+    label
+   {
+        margin-top: 10px;
+    }
+
+</style>
+<body>
+    @section scripts {
+
+        <script type="text/javascript">
+
+
+            function päivitäListaus() {
+                $.getJSON("/hallinta/getsauna", null, function (json) {
+                    var Hallinta = JSON.parse(json);
+
+                    var html = "";
+                    for (var index = 0; index < Hallinta.length; index++) {
+                        html += "<tr>" +
+                            "<td>" + Hallinta[index].SaunaID + "</td>" +
+                            "<td>" + Hallinta[index].Sauna_Nimi + "</td>" +
+                            "</tr>\r\n";
+                    }
+                    $("#Sauna2List tbody").html(html);
+
+                    //tästä lisätty
+                });
+            }
+
+            // sivun alustaminen
+            $(function () {
+                päivitäListaus();
+
+                $("#SaveButton").click(function () {
+                    // luetaan käyttäjän syöttämät kentät
+                    var details = { Sauna_Nimi: $("#Sauna_Nimi").val(), };
+
+
+                    $.post("/hallinta/newsauna/", details, function (status) {
+                        if (status == true) {
+                            alert("Uusi sauna" + Sauna_Nimi + "lisätty.");
+                            päivitäListaus();
+                        }
+                        else {
+                            alert("Tallennus ei onnistunut, yritä uudelleen!");
+                        }
+                    });
+
+                });
+
+                console.log("Alustus valmis!");
+
+            });
+            // sivun alustaminen
+
+
+            // sivun alustaminen
+            $(function () {
+                päivitäListaus();
+
+                $("#UlosButton").click(function () {
+                    // luetaan käyttäjän syöttämät kentät
+                    var ok = confirm("Haluatko varmasti poistaa tiedon " + SaunaID + "?");
+                    var details = { SaunaID: $("#Sauna_ID").val(), };
+
+                    if (ok == true)
+                        $.post("/hallinta/Delete/", details, function (status) {
+                            if (status == true) {
+                                alert("Sauna poistettu");
+                                päivitäListaus();
+                            }
+                            else {
+                                alert("Tallennus ei onnistunut, yritä uudelleen!");
+                            }
+                        });
+
+                });
+
+                console.log("Alustus valmis!");
+
+            });
+            // sivun alustaminen
+
+            $(function () {
+                päivitäListaus();
+
+            });
+
+            function päivitäValot() {
+                $.getJSON("/hallinta/getvalot", null, function (json) {
+                    var Hallinta = JSON.parse(json);
+
+                    var html = "";
+                    for (var index = 0; index < Hallinta.length; index++) {
+                        html += "<tr>" +
+                            "<td>" + Hallinta[index].ValoID + "</td>" +
+                            "<td>" + Hallinta[index].Huone + "</td>" +
+                            "</tr>\r\n";
+                    }
+                    $("#Valot2List tbody").html(html);
+
+                    //tästä lisätty
+                });
+            }
+
+            // sivun alustaminen
+            $(function () {
+                päivitäValot();
+
+                $("#ValotSaveButton").click(function () {
+                    // luetaan käyttäjän syöttämät kentät
+                    var details = { Huone: $("#Huone").val(), };
+
+
+                    $.post("/hallinta/newvalot/", details, function (status) {
+                        if (status == true) {
+                            alert("Uusi valo" + Huone + "lisätty.");
+                            päivitäValot();
+                        }
+                        else {
+                            alert("Tallennus ei onnistunut, yritä uudelleen!");
+                        }
+                    });
+                });
+                console.log("Alustus valmis!");
+            });
+
+            // sivun alustaminen
+            $(function () {
+                päivitäValot();
+
+                $("#PoistaValotButton").click(function () {
+                    // luetaan käyttäjän syöttämät kentät
+                    var details = { ValoID: $("#Valo_ID").val(), };
+
+                    $.post("/hallinta/DeleteValot/", details, function (status) {
+                        if (status == true) {
+                            alert("Huone poistettu");
+                            päivitäValot();
+                        }
+                        else {
+                            alert("Tallennus ei onnistunut, yritä uudelleen!");
+                        }
+                    });
+
+                });
+
+                console.log("Alustus valmis!");
+
+            });
+            // sivun alustaminen
+
+            $(function () {
+                päivitäValot();
+
+            });
+
+        </script>
+
+    }
+
+        <div class="w3-content bgimg" style="max-width:1400px; max-height:800px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="p" for="Saunan Nimi" style="margin-top:30px;">Lisää Sauna:</label>
+                    <input type="text" class="form-control" id="Sauna_Nimi" placeholder="Anna lisättävälle saunalle nimi">
+                    <button type="button" class="btn btn-default btn-circle btn-lg" id="SaveButton">Lisää</button>
+                </div>
+                        <div class="col-lg-4">
+                            <label class="p" for="Saunan numero">Poista Sauna:</label>
+                            <input type="text" class="form-control" id="Sauna_ID" placeholder="Anna poistettavan saunan numero">
+                            <button type="button" class="btn btn-default" id="UlosButton">Poista</button>
+                       
+                </div>
+            </div>
+            <!-- Sites -->
+            <table id="Sauna2List" class="table">
+                <caption>Sauna</caption>
+                <thead>
+                    <tr>
+                        <th>Numero</th>
+                        <th>Nimi</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+
+            <div class="w3-content bgimg" style="max-width:1400px; max-height:800px;">
+                <div class="w3-container ">
+                    <!-- Header -->
+                    <header class="w3-container w3-content w3-padding-32" style="margin-top: 30px;"></header>
+                    <!-- Grid -->
+
+                    <div class="w3-row w3-content">
+                        <!-- Sites -->
+                        <div>
+                            <div class="container">
+                                <form class="">
+                                    <div class="form-group">
+                                        <label class="p" for="Saunan numero">Poista huone:</label>
+                                        <input type="text" class="form-control" id="Valo_ID" placeholder="Anna poistettavan huoneen numero">
+                                        <button type="button" class="btn btn-default" id="PoistaValotButton">Poista</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="p" for="Saunan Nimi" style="margin-top:30px;">Lisää Huone:</label>
+                                        <input type="text" class="form-control" id="Huone" placeholder="Anna lisättävälle huoneelle nimi">
+                                        <button type="button" class="btn btn-default btn-circle btn-lg" id="ValotSaveButton">Lisää</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="Valot2List" class="table" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th>Numero</th>
+                                <th>Nimi</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
