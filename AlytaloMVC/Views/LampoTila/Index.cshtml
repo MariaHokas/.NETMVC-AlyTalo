@@ -12,7 +12,31 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
+    h1 {
+        font-family: Lucida Console;
+        font-size: 40px;
+        color: red;
+        text-shadow: 2px 2px 4px #000000;
+    }
+
+    .glyphicon-plus-sign {
+        font-size: 32px;
+        color: rgb(184,179,214);
+        text-shadow: 2px 2px 4px #000000;
+        text-align: match-parent;
+        margin-top: 15px;
+    }
+
+    .glyphicon-minus-sign {
+        font-size: 32px;
+        color: rgb(184,179,214);
+        text-shadow: 2px 2px 4px #000000;
+        text-align: match-parent;
+        margin-top: 15px;
+    }
+
     table {
+        margin-left: 50px;
         margin-top: 0px;
         background-color: rgb(61,63,63);
         text-align: center;
@@ -24,6 +48,16 @@
         border-color: white;
         border-style: solid;
         border-width: 30px;
+        width: 90%;
+    }
+
+    th, td {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 20px;
+        padding: 40px;
+        padding-top: 20px;
+        width: 10%;
     }
 
 </style>
@@ -41,36 +75,50 @@
                 var html = "";
                 for (var index = 0; index < HuoneLampotila.length; index++) {
                     html += "<tr>" +
-                        "<td>" + HuoneLampotila[index].Lampotila + "</td>" +
-                        "<td>" + HuoneLampotila[index].HuoneenNimi + "</td>" +
-                        "<td><a href='#'><span class='glyphicon glyphicon-record'></span></a></td>" +
+                        "<td>" + HuoneLampotila[index].HuoneID + "</td>" +                                         
+                        "<td><a href='#'><span class='glyphicon glyphicon-minus-sign'></span></a></td>" +
+                        "<td><a href='#'><span class='glyphicon glyphicon-plus-sign'></span></a></td>" +
+                        "<td>" + HuoneLampotila[index].Lampotila + "</td>" +     
                         "</tr>\r\n";
                 }
                 $("#LampoList tbody").html(html);
 
                 //tästä lisätty
-            });
-        }
-        $(function () {
-            päivitäListaus();
+          
+       
+            //Lämpötilan laskeminen -1
+            $(".glyphicon-minus-sign").click(function () {
+                // etsitään tiedot klikatulta riviltä
 
-            $("#SaveButton").click(function () {
-                // luetaan käyttäjän syöttämät kentät
-                var details = {
-                    Lampotila: $("#lampo_tila").val(),
-                };
-
-                $.post("/lampotila/lampo/", details, function (status) {
-                    if (status == true) {        
+                var HuoneID = $(this).parent().parent().prev().text();
+                $.getJSON("/lampotila/LampoMiinus/" + HuoneID, null, function (status) {
+                    if (status == true) {
                         päivitäListaus();
                     }
                     else {
-                        alert("Tarkista syöttämäsi lämpötila. Lämpötilan voi asettaa 18-24 asteen välille!");
+                        alert("Lämpötilaa ei voi asettaa yli 90 astetta");
                     }
+                });
+                });
+
+                //lämpötilan nostaminen +1 astetta
+                $(".glyphicon-plus-sign").click(function () {
+                    // etsitään asiakkaan tiedot klikatulta riviltä
+
+                    var HuoneID = $(this).parent().parent().prev().prev().text();
+                    $.getJSON("/lampotila/lampoPlus/" + HuoneID, null, function (status) {
+                        if (status == true) {
+                            päivitäListaus();
+
+                        }
+                    });
                 });
             });
 
-            console.log("Alustus valmis!");
+        }
+
+        $(function () {
+            päivitäListaus();
 
         });
 
@@ -80,24 +128,11 @@
     <div class="w3-container text-center">
         <h1> Aseta lämpötila huoneeseen</h1>
         <p><span style="background-color:dimgrey; color:white;"> Lämpötilan voi asettaa 18 - 24 asteen välille</span></p>
-
-        <div class="third">
-            <div class="container">
-                <form class="">
-                    <div class="form-group">
-                        <label class="p" for="Lämpötila" style="margin-top:30px;">Lämpötila</label>
-                        <input type="text" class="form-control" id="lampo_tila" placeholder="Aseta uusi lämpotila">
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-default btn-circle btn-lg" id="SaveButton">Aseta uusi lämpötila</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="third">
+        <div style="margin-top:150px;">
             <table class="table" id="LampoList">
                 <thead>
                     <tr>
+                        <th>Tilanumero</th>
                         <th>Lämpötila</th>
                         <th>Nimi</th>
                     </tr>

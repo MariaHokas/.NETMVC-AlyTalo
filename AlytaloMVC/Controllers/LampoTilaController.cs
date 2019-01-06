@@ -23,14 +23,13 @@ namespace AlytaloMVC.Models
         {
             AlyTaloEntities entities = new AlyTaloEntities();
             var model = (from p in entities.HuoneLampotila
-                         orderby p.HuoneID descending
                          select new
                          {
                              p.HuoneID,
                              p.HuoneenNimi,
                              p.Lampotila
 
-                         }).Take(1);
+                         }).ToList();
 
             string json = JsonConvert.SerializeObject(model);
             entities.Dispose();
@@ -42,30 +41,63 @@ namespace AlytaloMVC.Models
         }
 
 
-        public ActionResult Lampo(HuoneLampotila pro)
+        public ActionResult LampoMiinus(string id)
         {
             AlyTaloEntities entities = new AlyTaloEntities();
 
+            bool OK = false;
             HuoneLampotila dbItem = (from p in entities.HuoneLampotila
-                                     where p.Lampotila != null
-                                     orderby p.HuoneID descending
-                                     select p).First();
+                                     where p.HuoneID.ToString() == id
+                                     select p).FirstOrDefault();
 
-            if ( pro.Lampotila > 17 && pro.Lampotila < 25)
-
+            if (dbItem != null)
             {
+                dbItem.Lampotila = dbItem.Lampotila - 1;
 
-                dbItem.Lampotila = pro.Lampotila;
-                entities.HuoneLampotila.Add(dbItem);
-                entities.SaveChanges();
-                OK = true;
+                if ( dbItem.Lampotila > 17 && dbItem.Lampotila < 25)
+
+                    
+                        entities.SaveChanges();
+                        OK = true;
+                    
+
             }
-
-
             //entiteettiolion vapauttaminen
             entities.Dispose();
 
       
+            // palautetaan 'json' muodossa
+            return Json(OK, JsonRequestBehavior.AllowGet);
+
+
+
+        }
+        public ActionResult LampoPlus(string id)
+        {
+            AlyTaloEntities entities = new AlyTaloEntities();
+
+            bool OK = false;
+            HuoneLampotila dbItem = (from p in entities.HuoneLampotila
+                                     where p.HuoneID.ToString() == id
+                                     orderby p.HuoneID descending
+                                     select p).FirstOrDefault();
+
+            if (dbItem != null)
+            {
+                dbItem.Lampotila = dbItem.Lampotila + 1;
+
+                if (dbItem.Lampotila > 17 && dbItem.Lampotila < 25)
+
+                {
+                    entities.SaveChanges();
+                    OK = true;
+                }
+
+            }
+            //entiteettiolion vapauttaminen
+            entities.Dispose();
+
+
             // palautetaan 'json' muodossa
             return Json(OK, JsonRequestBehavior.AllowGet);
 
