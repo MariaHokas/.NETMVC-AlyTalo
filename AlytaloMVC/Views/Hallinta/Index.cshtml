@@ -52,16 +52,31 @@
         font-size: 20px;
     }
 
-    input
-    {
-        max-width: 200px;
+    input {
 
+        box-shadow: 2px 2px 8px #000000;
+        padding: 5px;
+        margin-right: 2px;
+        border-radius: 4px;
+        outline-color: black;
+        width: 200px;
     }
 
     label
    {
         margin-top: 10px;
     }
+    .button {
+        margin-left:0px;
+        box-shadow: 2px 2px 8px #000000;
+        padding: 5px;
+        margin-right: 2px;
+        border-radius: 4px;
+        color: black;
+        background-color: white;
+    }
+  
+
 
 </style>
 <body>
@@ -116,23 +131,21 @@
 
             // sivun alustaminen
             $(function () {
-                päivitäListaus();
+                päivitäValot();
 
-                $("#UlosButton").click(function () {
+                $("#PoistaButton").click(function () {
                     // luetaan käyttäjän syöttämät kentät
-                    var ok = confirm("Haluatko varmasti poistaa tiedon " + SaunaID + "?");
                     var details = { SaunaID: $("#Sauna_ID").val(), };
 
-                    if (ok == true)
-                        $.post("/hallinta/Delete/", details, function (status) {
-                            if (status == true) {
-                                alert("Sauna poistettu");
-                                päivitäListaus();
-                            }
-                            else {
-                                alert("Tallennus ei onnistunut, yritä uudelleen!");
-                            }
-                        });
+                    $.post("/hallinta/Delete/", details, function (status) {
+                        if (status == true) {
+                            alert("Sauna poistettu");
+                            päivitäValot();
+                        }
+                        else {
+                            alert("Tallennus ei onnistunut, yritä uudelleen!");
+                        }
+                    });
 
                 });
 
@@ -236,13 +249,13 @@
             </div>
             <div class="col-sm-6">
                 <div class="row">
-                    <div class="col-sm-3"></div>
+                    <div class="col-sm-4"></div>
                     <div class="col-sm-4"><label class="p" for="Saunan Nimi">Lisää Sauna:</label></div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-5"><input type="text" class="form-control" id="Sauna_Nimi" placeholder="Anna lisättävälle saunalle nimi"></div>
-                    <div class="col-sm-1"><button type="button" class="btn btn-default" id="SaveButton">Lisää</button></div>
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-5"><input type="text" class="form-control" id="Sauna_Nimi" placeholder="Anna saunalle nimi"></div>
+                    <div class="col-sm-1"><button type="button" class="button" id="SaveButton">Lisää</button></div>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -250,8 +263,8 @@
                     <div class="col-sm-6"><label class="p" for="Saunan numero">Poista Sauna:</label></div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-5"><input type="text" class="form-control" id="Sauna_ID" placeholder="Anna poistettavan saunan numero"></div>
-                    <div class="col-sm-1"><button type="button" class="btn btn-default" id="UlosButton">Poista</button></div>
+                    <div class="col-sm-5"><input type="text" class="form-control" id="Sauna_ID" placeholder="Anna saunan numero"></div>
+                    <div class="col-sm-1"><button type="button" class="button" id="PoistaButton">Poista</button></div>
                 </div>
             </div>
             <br />
@@ -272,13 +285,13 @@
             </div>
             <div class="col-sm-6">
                     <div class="row">
-                        <div class="col-sm-3"></div>
+                        <div class="col-sm-4"></div>
                         <div class="col-sm-4"><label class="p" for="Saunan Nimi">Lisää Huone:</label></div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-5"><input type="text" class="form-control" id="Huone" placeholder="Anna lisättävälle huoneelle nimi"></div>
-                        <div class="col-sm-1"><button type="button" class="btn btn-default" id="ValotSaveButton">Lisää</button></div>
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-5"><input type="text" class="input" id="Huone" placeholder="Anna huoneelle nimi"></div>
+                        <div class="col-sm-1"><button type="button" class="button" id="ValotSaveButton">Lisää</button></div>
                     </div>
              </div>
            
@@ -287,8 +300,8 @@
                 <div class="col-sm-6"><label class="p" for="Saunan numero">Poista huone:</label></div>
             </div>
             <div class="row">
-                <div class="col-sm-5"><input type="text" class="form-control" id="Valo_ID" placeholder="Anna poistettavan huoneen numero"></div>
-                <div class="col-sm-1"><button type="button" class="btn btn-default" id="PoistaValotButton">Poista</button></div>
+                <div class="col-sm-5"><input type="text" class="input" id="Valo_ID" placeholder="Anna huoneen numero"></div>
+                <div class="col-sm-1"><button type="button" class="button" id="PoistaValotButton">Poista</button></div>
             </div>
 
             </div>
