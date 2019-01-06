@@ -28,7 +28,8 @@
     }
         .kokotable {
             table-layout: auto;
-            width: 180px;
+            width: 480px;
+            align-items: center;
         }
 
     th, td {
@@ -218,71 +219,80 @@
 
     }
 
-        <div class="w3-content bgimg" style="max-width:1400px; max-height:800px;">
+        <div class="w3-content" style="max-width:1400px; max-height:800px;">
             <div class="row">
-                <div class="col-md-6">
-                    <label class="p" for="Saunan Nimi" style="margin-top:30px;">Lisää Sauna:</label>
-                    <input type="text" class="form-control" id="Sauna_Nimi" placeholder="Anna lisättävälle saunalle nimi">
-                    <button type="button" class="btn btn-default btn-circle btn-lg" id="SaveButton">Lisää</button>
+                <!-- Sauna taulu -->
+                <div class="col-sm-3"></div>
+                <table id="Sauna2List" class="table kokotable col-sm-2">
+                    <caption>Saunalista</caption>
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Nimi</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-4"><label class="p" for="Saunan Nimi">Lisää Sauna:</label></div>
                 </div>
-                        <div class="col-lg-4">
-                            <label class="p" for="Saunan numero">Poista Sauna:</label>
-                            <input type="text" class="form-control" id="Sauna_ID" placeholder="Anna poistettavan saunan numero">
-                            <button type="button" class="btn btn-default" id="UlosButton">Poista</button>
-                       
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-5"><input type="text" class="form-control" id="Sauna_Nimi" placeholder="Anna lisättävälle saunalle nimi"></div>
+                    <div class="col-sm-1"><button type="button" class="btn btn-default" id="SaveButton">Lisää</button></div>
                 </div>
             </div>
-            <!-- Sites -->
-            <table id="Sauna2List" class="table">
-                <caption>Sauna</caption>
-                <thead>
-                    <tr>
-                        <th>Numero</th>
-                        <th>Nimi</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-6"><label class="p" for="Saunan numero">Poista Sauna:</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5"><input type="text" class="form-control" id="Sauna_ID" placeholder="Anna poistettavan saunan numero"></div>
+                    <div class="col-sm-1"><button type="button" class="btn btn-default" id="UlosButton">Poista</button></div>
+                </div>
+            </div>
+            <br />
 
-
-            <div class="w3-content bgimg" style="max-width:1400px; max-height:800px;">
-                <div class="w3-container ">
-                    <!-- Header -->
-                    <header class="w3-container w3-content w3-padding-32" style="margin-top: 30px;"></header>
-                    <!-- Grid -->
-
-                    <div class="w3-row w3-content">
-                        <!-- Sites -->
-                        <div>
-                            <div class="container">
-                                <form class="">
-                                    <div class="form-group">
-                                        <label class="p" for="Saunan numero">Poista huone:</label>
-                                        <input type="text" class="form-control" id="Valo_ID" placeholder="Anna poistettavan huoneen numero">
-                                        <button type="button" class="btn btn-default" id="PoistaValotButton">Poista</button>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="p" for="Saunan Nimi" style="margin-top:30px;">Lisää Huone:</label>
-                                        <input type="text" class="form-control" id="Huone" placeholder="Anna lisättävälle huoneelle nimi">
-                                        <button type="button" class="btn btn-default btn-circle btn-lg" id="ValotSaveButton">Lisää</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+            <!--Valottaulu-->
+            <div class="row" style="margin-top:100px;">
+                <div class="col-sm-3"></div>
+                <table id="Valot2List" class="table kokotable">
+                    <caption>Huonelista valoille</caption>
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Nimi</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-4"><label class="p" for="Saunan Nimi">Lisää Huone:</label></div>
                     </div>
-                    <table id="Valot2List" class="table" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr>
-                                <th>Numero</th>
-                                <th>Nimi</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-
-                    </table>
-
-                </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-5"><input type="text" class="form-control" id="Huone" placeholder="Anna lisättävälle huoneelle nimi"></div>
+                        <div class="col-sm-1"><button type="button" class="btn btn-default" id="ValotSaveButton">Lisää</button></div>
+                    </div>
+             </div>
+           
+            <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-6"><label class="p" for="Saunan numero">Poista huone:</label></div>
             </div>
+            <div class="row">
+                <div class="col-sm-5"><input type="text" class="form-control" id="Valo_ID" placeholder="Anna poistettavan huoneen numero"></div>
+                <div class="col-sm-1"><button type="button" class="btn btn-default" id="PoistaValotButton">Poista</button></div>
+            </div>
+
+            </div>
+
         </div>
 </body>
 
