@@ -5,11 +5,12 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 <style>
     h1 {
@@ -35,7 +36,7 @@
         margin-top: 15px;
     }
 
-    table {
+    .table {
         margin-left: 50px;
         margin-top: 0px;
         background-color: rgb(61,63,63);
@@ -54,12 +55,10 @@
     th, td {
         margin-top: 15px;
         text-align: center;
-        font-size: 20px;
         padding: 40px;
         padding-top: 20px;
         width: 10%;
     }
-
 </style>
 
 @section scripts {
@@ -75,30 +74,30 @@
                 var html = "";
                 for (var index = 0; index < HuoneLampotila.length; index++) {
                     html += "<tr>" +
-                        "<td>" + HuoneLampotila[index].HuoneID + "</td>" +                                         
+                        "<td>" + HuoneLampotila[index].HuoneID + "</td>" +
                         "<td><a href='#'><span class='glyphicon glyphicon-minus-sign'></span></a></td>" +
                         "<td><a href='#'><span class='glyphicon glyphicon-plus-sign'></span></a></td>" +
-                        "<td>" + HuoneLampotila[index].Lampotila + "</td>" +     
+                        "<td>" + HuoneLampotila[index].Lampotila + "</td>" +
                         "</tr>\r\n";
                 }
                 $("#LampoList tbody").html(html);
 
                 //tästä lisätty
-          
-       
-            //Lämpötilan laskeminen -1
-            $(".glyphicon-minus-sign").click(function () {
-                // etsitään tiedot klikatulta riviltä
 
-                var HuoneID = $(this).parent().parent().prev().text();
-                $.getJSON("/lampotila/LampoMiinus/" + HuoneID, null, function (status) {
-                    if (status == true) {
-                        päivitäListaus();
-                    }
-                    else {
-                        alert("Lämpötilaa ei voi asettaa yli 90 astetta");
-                    }
-                });
+
+                //Lämpötilan laskeminen -1
+                $(".glyphicon-minus-sign").click(function () {
+                    // etsitään tiedot klikatulta riviltä
+
+                    var HuoneID = $(this).parent().parent().prev().text();
+                    $.getJSON("/lampotila/LampoMiinus/" + HuoneID, null, function (status) {
+                        if (status == true) {
+                            päivitäListaus();
+                        }
+                        else {
+                            alert("Lämpötilaa ei voi asettaa yli 90 astetta");
+                        }
+                    });
                 });
 
                 //lämpötilan nostaminen +1 astetta
@@ -125,20 +124,20 @@
     </script>
 }
 
-    <div class="w3-container text-center">
-        <h1> Aseta lämpötila huoneeseen</h1>
-        <p><span style="background-color:dimgrey; color:white;"> Lämpötilan voi asettaa 18 - 24 asteen välille</span></p>
-        <div style="margin-top:150px;">
-            <table class="table" id="LampoList">
-                <thead>
-                    <tr>
-                        <th>Tilanumero</th>
-                        <th>Lämpötila</th>
-                        <th>Nimi</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+<div class="w3-container text-center">
+    <h1> Aseta lämpötila huoneeseen</h1>
+    <p><span style="background-color:dimgrey; color:white;"> Lämpötilan voi asettaa 18 - 24 asteen välille</span></p>
+    <div style="margin-top:150px;">
+        <table class="table" id="LampoList">
+            <thead>
+                <tr>
+                    <th>Tilanumero</th>
+                    <th>Lämpötila</th>
+                    <th>Nimi</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
+</div>
 
