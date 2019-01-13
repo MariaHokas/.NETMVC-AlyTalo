@@ -8,28 +8,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<div class="jumbotron">
+<style>
+    .li {
+        font-family: 'Lucida Console';
+        font-size: 20px;
+        color:rgb(0,0,225);
+    }
+
+</style>
+<div class="container text-center" style="background-color:rgba(250,250,250,0.5); margin-top:100px; margin-bottom:200px;">
     <h1>My ÄlyTalo App</h1>
-    <p class="lead">Lisää tarvittaessa huoneita, tai poista huoneita.</p>
-    <p class="btn btn-primary btn-lg" @Html.ActionLink("Hallitse tiloja", "Index", "Hallinta")></p>
+    <p class="lead">Lisää tarvittaessa tiloja, tai poista tiloja. Hallitse lämpötiloja, tai laita sauna päälle</p>
+    <ul>
+        <li class="li">@Html.ActionLink("Hallitse tiloja", "Index", "Hallinta")</li>
+        <li class="li">@Html.ActionLink("Valot", "Index", "Valot")</li>
+        <li class="li">@Html.ActionLink("Sauna", "Index", "Sauna")</li>
+        <li class="li">@Html.ActionLink("Lämmönsäätö", "Index", "LampoTila")</li>
+    </ul>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Säädä talon valoja</h2>
-        <p>
-            Voit säätää talon valoja kolmella eri kirkkaudella päälle ja pois päältä toiminnon lisäksi.
-        </p>
-        <p><a class="btn btn-default btn-lg" @Html.ActionLink("Valot", "Index", "Valot")></a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Hallitse saunaa</h2>
-        <p>Voit laittaa saunan päälle ja pois. Lisäksi voit säätää saunan lämpötilan 5 asteen tarkkuudella. Maximi lämpötila on 90 astetta.</p>
-        <p><a class="btn btn-default btn-lg" @Html.ActionLink("Sauna", "Index", "Sauna")></a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Säädä huoneiden lämpotilaa</h2>
-        <p>Voit asettaa asunnon lämpötilan 18 -24 asteen välille.</p>
-        <p><a class="btn btn-default btn-lg" @Html.ActionLink("Lämmönsäätö", "Index", "LampoTila")></a></p>
-    </div>
-</div>

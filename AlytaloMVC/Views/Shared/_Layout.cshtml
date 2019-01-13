@@ -27,40 +27,37 @@
     </style>
 </head>
 
-
-
 <body class="tausta">
-    <nav class="navbar-expand-md bg-dark navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("My ÄlyTalo Application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <nav class="navbar-expand-md bg-dark navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("My ÄlyTalo Application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Etusivu", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Valot", "Index", "Valot")</li>
+                        <li>@Html.ActionLink("Sauna", "Index", "Sauna")</li>
+                        <li>@Html.ActionLink("Lämmitys", "Index", "Lampotila")</li>
+                        <li>@Html.ActionLink("Hallinta", "Index", "Hallinta")</li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Etusivu", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Valot", "Index", "Valot")</li>
-                    <li>@Html.ActionLink("Sauna", "Index", "Sauna")</li>
-                    <li>@Html.ActionLink("Lämmitys", "Index", "Lampotila")</li>
-                    <li>@Html.ActionLink("Hallinta", "Index", "Hallinta")</li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-       
-        <footer style="text-align:right;">
-            <p>&copy; @DateTime.Now.Year - My ÄlyTalo Application</p>
-        </footer>
-    </div>
+        </nav>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+
+        <div class="container body-content">
+            @RenderBody()
+
+        </div>
+    </body>
 </html>
